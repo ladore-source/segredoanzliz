@@ -1,24 +1,119 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { siteConfig, formatBRL } from "@/lib/site-config";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: `${siteConfig.creatorName} — Acesso VIP exclusivo` },
+      { name: "description", content: "Conteúdo exclusivo para assinantes maiores de 18 anos. Assine via Pix." },
+      { property: "og:title", content: `${siteConfig.creatorName} — Acesso VIP` },
+      { property: "og:description", content: "Meu lado mais provocante está reservado para quem assina." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 p-6 backdrop-blur-xl">
+      <div className="glass max-w-sm rounded-3xl p-8 text-center">
+        <p className="text-5xl font-display text-primary">18+</p>
+        <h2 className="mt-4 font-display text-2xl">Conteúdo adulto</h2>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Este site contém material destinado exclusivamente a maiores de 18 anos. Ao continuar, você confirma ter 18 anos ou mais.
+        </p>
+        <button onClick={onConfirm} className="bg-cta mt-6 w-full rounded-full py-4 font-semibold text-primary-foreground transition hover:scale-[1.02]">
+          Tenho 18 anos ou mais
+        </button>
+        <a href="https://www.google.com" className="mt-3 block text-sm text-muted-foreground underline">Sair</a>
+      </div>
     </div>
+  );
+}
+
+function PixModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-background/80 p-4 backdrop-blur-md sm:items-center">
+      <div className="glass w-full max-w-md rounded-3xl p-6">
+        <div className="flex items-center justify-between">
+          <h3 className="font-display text-2xl">Pagamento via Pix</h3>
+          <button onClick={onClose} aria-label="Fechar" className="text-2xl text-muted-foreground">×</button>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {siteConfig.plan.name} · <span className="text-foreground">{formatBRL(siteConfig.plan.priceCents)}/mês</span>
+        </p>
+        <div className="mt-6 rounded-2xl border border-primary/40 bg-wine/40 p-5 text-sm">
+          <p className="font-semibold text-primary">Integração Pix ainda não configurada</p>
+          <p className="mt-2 text-muted-foreground">
+            Nenhuma cobrança é gerada nem simulada. Para ativar, a proprietária precisa conectar um provedor de Pix que aceite conteúdo adulto e informar as credenciais no painel administrativo.
+          </p>
+        </div>
+        <button disabled className="mt-5 w-full rounded-full bg-muted py-4 font-semibold text-muted-foreground">
+          COPIAR CÓDIGO PIX
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Index() {
+  const [adult, setAdult] = useState(true);
+  const [checkout, setCheckout] = useState(false);
+  useEffect(() => setAdult(localStorage.getItem("age-ok") === "1"), []);
+  const { plan } = siteConfig;
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      {!adult && <AgeGate onConfirm={() => { localStorage.setItem("age-ok", "1"); setAdult(true); }} />}
+      {checkout && <PixModal onClose={() => setCheckout(false)} />}
+
+      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6">
+        {siteConfig.heroVideoUrl ? (
+          <video src={siteConfig.heroVideoUrl} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl" />
+        ) : (
+          <div className="bg-hero animate-drift absolute inset-0 blur-3xl" aria-hidden />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/50 to-background" />
+        <div className="relative z-10 mx-auto max-w-2xl text-center">
+          <p className="text-xs uppercase tracking-[0.4em] text-primary">{siteConfig.creatorName}</p>
+          <h1 className="mt-6 font-display text-6xl italic leading-[0.95] sm:text-8xl">{siteConfig.heroTitle}</h1>
+          <p className="mx-auto mt-6 max-w-md text-lg text-muted-foreground">{siteConfig.heroSubtitle}</p>
+          <a href="#assinar" className="bg-cta mt-10 inline-block rounded-full px-8 py-5 text-sm font-bold tracking-wider text-primary-foreground transition hover:scale-105">
+            {siteConfig.heroCta}
+          </a>
+        </div>
+      </section>
+
+      <section id="assinar" className="px-6 py-24">
+        <div className="mx-auto max-w-md text-center">
+          <h2 className="font-display text-4xl sm:text-5xl">Seu acesso exclusivo começa aqui.</h2>
+          <div className="glass mt-10 rounded-3xl p-8 text-left">
+            <p className="text-xs uppercase tracking-[0.3em] text-primary">{plan.name}</p>
+            <p className="mt-3 font-display text-5xl">{formatBRL(plan.priceCents)}<span className="font-sans text-base text-muted-foreground"> /mês</span></p>
+            <ul className="mt-6 space-y-3">
+              {plan.benefits.map((b) => (
+                <li key={b} className="flex gap-3"><span className="text-primary">♥</span>{b}</li>
+              ))}
+            </ul>
+            <button onClick={() => setCheckout(true)} className="bg-cta mt-8 w-full rounded-full py-5 font-bold tracking-wider text-primary-foreground transition hover:scale-[1.02]">
+              ASSINAR AGORA
+            </button>
+            <p className="mt-4 text-center text-xs text-muted-foreground">Pagamento exclusivamente via Pix</p>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-border px-6 py-10 text-center text-xs text-muted-foreground">
+        <p>Conteúdo restrito a maiores de 18 anos.</p>
+        <nav className="mt-4 flex flex-wrap justify-center gap-4">
+          {[["termos", "Termos de Uso"], ["privacidade", "Privacidade"], ["cancelamento", "Cancelamento"], ["contato", "Contato"]].map(([s, l]) => (
+            <Link key={s} to="/legal/$slug" params={{ slug: s }} className="hover:text-primary">{l}</Link>
+          ))}
+        </nav>
+      </footer>
+    </main>
   );
 }
