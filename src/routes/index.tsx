@@ -109,7 +109,7 @@ function Index() {
       <footer className="border-t border-border px-6 py-10 text-center text-xs text-muted-foreground">
         <p>Conteúdo restrito a maiores de 18 anos.</p>
         <nav className="mt-4 flex flex-wrap justify-center gap-4">
-          {[["termos", "Termos de Uso"], ["privacidade", "Privacidade"], ["cancelamento", "Cancelamento"], ["contato", "Contato"]].map(([s, l]) => (
+          {([["termos", "Termos de Uso"], ["privacidade", "Privacidade"], ["cancelamento", "Cancelamento"], ["contato", "Contato"]] as const).map(([s, l]) => (
             <Link key={s} to="/legal/$slug" params={{ slug: s }} className="hover:text-primary">{l}</Link>
           ))}
         </nav>
