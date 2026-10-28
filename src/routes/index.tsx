@@ -72,11 +72,13 @@ function Index() {
 
       <section className="hero-section bg-hero flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 py-14 text-center sm:px-8 sm:py-16">
         <div className="hero-gallery" aria-label="Galeria de fotos e vídeo">
-          <img
-            src={siteConfig.heroImages.left}
-            alt="Retrato de Anz Liz"
-            className="hero-gallery__photo hero-gallery__photo--left"
-          />
+          <div className="hero-gallery__photo-frame hero-gallery__photo-frame--left">
+            <img
+              src={siteConfig.heroImages.left}
+              alt="Retrato de Anz Liz"
+              className="hero-gallery__photo"
+            />
+          </div>
           <div className="hero-gallery__video-frame">
             <video
               src={siteConfig.heroVideoUrl}
@@ -89,11 +91,13 @@ function Index() {
               className="hero-gallery__video"
             />
           </div>
-          <img
-            src={siteConfig.heroImages.right}
-            alt="Retrato de Anz Liz"
-            className="hero-gallery__photo hero-gallery__photo--right"
-          />
+          <div className="hero-gallery__photo-frame hero-gallery__photo-frame--right">
+            <img
+              src={siteConfig.heroImages.right}
+              alt="Retrato de Anz Liz"
+              className="hero-gallery__photo"
+            />
+          </div>
         </div>
 
         <div className="relative z-10 mx-auto mt-10 w-full max-w-2xl sm:mt-12">
