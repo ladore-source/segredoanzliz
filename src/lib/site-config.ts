@@ -1,10 +1,14 @@
 // DADOS DEMONSTRATIVOS — serão editáveis pelo painel administrativo.
 export const siteConfig = {
-  creatorName: "[NOME DA CRIADORA]",
-  heroTitle: "Quer me ver seminua?",
+  creatorName: "ANZ LIZ",
+  heroTitle: "Quer me ver\nseminua?",
   heroSubtitle: "Meu lado mais provocante está reservado para quem assina.",
   heroCta: "QUERO ACESSO EXCLUSIVO 🔥",
-  heroVideoUrl: "" as string, // vazio = placeholder elegante
+  heroVideoUrl: "/videos/preview.mp4",
+  heroImages: {
+    left: "/images/hero-left.jpg",
+    right: "/images/hero-right.jpg",
+  },
   plan: {
     name: "Acesso VIP",
     priceCents: 2990,

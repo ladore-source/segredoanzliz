@@ -70,18 +70,37 @@ function Index() {
       {!adult && <AgeGate onConfirm={() => { localStorage.setItem("age-ok", "1"); setAdult(true); }} />}
       {checkout && <PixModal onClose={() => setCheckout(false)} />}
 
-      <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6">
-        {siteConfig.heroVideoUrl ? (
-          <video src={siteConfig.heroVideoUrl} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl" />
-        ) : (
-          <div className="bg-hero animate-drift absolute inset-0 blur-3xl" aria-hidden />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/50 to-background" />
-        <div className="relative z-10 mx-auto max-w-2xl text-center">
+      <section className="hero-section bg-hero flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 py-14 text-center sm:px-8 sm:py-16">
+        <div className="hero-gallery" aria-label="Galeria de fotos e vídeo">
+          <img
+            src={siteConfig.heroImages.left}
+            alt="Retrato de Anz Liz"
+            className="hero-gallery__photo hero-gallery__photo--left"
+          />
+          <div className="hero-gallery__video-frame">
+            <video
+              src={siteConfig.heroVideoUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-label="Prévia em vídeo de Anz Liz"
+              className="hero-gallery__video"
+            />
+          </div>
+          <img
+            src={siteConfig.heroImages.right}
+            alt="Retrato de Anz Liz"
+            className="hero-gallery__photo hero-gallery__photo--right"
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto mt-10 w-full max-w-2xl sm:mt-12">
           <p className="text-xs uppercase tracking-[0.4em] text-primary">{siteConfig.creatorName}</p>
-          <h1 className="mt-6 font-display text-6xl italic leading-[0.95] sm:text-8xl">{siteConfig.heroTitle}</h1>
-          <p className="mx-auto mt-6 max-w-md text-lg text-muted-foreground">{siteConfig.heroSubtitle}</p>
-          <a href="#assinar" className="bg-cta mt-10 inline-block rounded-full px-8 py-5 text-sm font-bold tracking-wider text-primary-foreground transition hover:scale-105">
+          <h1 className="mt-4 whitespace-pre-line font-display text-5xl italic leading-[0.98] sm:mt-5 sm:text-7xl lg:text-8xl">{siteConfig.heroTitle}</h1>
+          <p className="mx-auto mt-5 max-w-md text-base text-muted-foreground sm:mt-6 sm:text-lg">{siteConfig.heroSubtitle}</p>
+          <a href="#assinar" className="bg-cta mt-8 inline-flex max-w-full items-center justify-center rounded-full px-7 py-4 text-center text-xs font-bold tracking-wider text-primary-foreground transition hover:scale-105 sm:mt-10 sm:px-8 sm:py-5 sm:text-sm">
             {siteConfig.heroCta}
           </a>
         </div>
