@@ -4,6 +4,7 @@ export const siteConfig = {
   heroTitle: "Quer me ver\nseminua?",
   heroSubtitle: "Meu lado mais provocante está reservado para quem assina.",
   heroCta: "QUERO ACESSO EXCLUSIVO 🔥",
+  checkoutUrl: "https://pay.cakto.com.br/3fkmsmz_1258086",
   heroVideoUrl: "/videos/preview.mp4",
   heroImages: {
     left: "/images/hero-left.jpg",

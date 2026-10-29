@@ -34,41 +34,14 @@ function AgeGate({ onConfirm }: { onConfirm: () => void }) {
   );
 }
 
-function PixModal({ onClose }: { onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-40 flex items-end justify-center bg-background/80 p-4 backdrop-blur-md sm:items-center">
-      <div className="glass w-full max-w-md rounded-3xl p-6">
-        <div className="flex items-center justify-between">
-          <h3 className="font-display text-2xl">Pagamento via Pix</h3>
-          <button onClick={onClose} aria-label="Fechar" className="text-2xl text-muted-foreground">×</button>
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {siteConfig.plan.name} · <span className="text-foreground">{formatBRL(siteConfig.plan.priceCents)}/mês</span>
-        </p>
-        <div className="mt-6 rounded-2xl border border-primary/40 bg-wine/40 p-5 text-sm">
-          <p className="font-semibold text-primary">Integração Pix ainda não configurada</p>
-          <p className="mt-2 text-muted-foreground">
-            Nenhuma cobrança é gerada nem simulada. Para ativar, a proprietária precisa conectar um provedor de Pix que aceite conteúdo adulto e informar as credenciais no painel administrativo.
-          </p>
-        </div>
-        <button disabled className="mt-5 w-full rounded-full bg-muted py-4 font-semibold text-muted-foreground">
-          COPIAR CÓDIGO PIX
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function Index() {
   const [adult, setAdult] = useState(true);
-  const [checkout, setCheckout] = useState(false);
   useEffect(() => setAdult(localStorage.getItem("age-ok") === "1"), []);
   const { plan } = siteConfig;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       {!adult && <AgeGate onConfirm={() => { localStorage.setItem("age-ok", "1"); setAdult(true); }} />}
-      {checkout && <PixModal onClose={() => setCheckout(false)} />}
 
       <section className="hero-section bg-hero flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 py-14 text-center sm:px-8 sm:py-16">
         <div className="hero-gallery" aria-label="Galeria de fotos e vídeo">
@@ -104,7 +77,7 @@ function Index() {
           <p className="text-xs uppercase tracking-[0.4em] text-primary">{siteConfig.creatorName}</p>
           <h1 className="hero-title mt-4 whitespace-pre-line sm:mt-5">{siteConfig.heroTitle}</h1>
           <p className="mx-auto mt-5 max-w-md text-base text-muted-foreground sm:mt-6 sm:text-lg">{siteConfig.heroSubtitle}</p>
-          <a href="#assinar" className="bg-cta mt-8 inline-flex max-w-full items-center justify-center rounded-full px-7 py-4 text-center text-xs font-bold tracking-wider text-primary-foreground transition hover:scale-105 sm:mt-10 sm:px-8 sm:py-5 sm:text-sm">
+          <a href={siteConfig.checkoutUrl} className="bg-cta mt-8 inline-flex max-w-full items-center justify-center rounded-full px-7 py-4 text-center text-xs font-bold tracking-wider text-primary-foreground transition hover:scale-105 sm:mt-10 sm:px-8 sm:py-5 sm:text-sm">
             {siteConfig.heroCta}
           </a>
         </div>
@@ -121,9 +94,9 @@ function Index() {
                 <li key={b} className="flex gap-3"><span className="text-primary">♥</span>{b}</li>
               ))}
             </ul>
-            <button onClick={() => setCheckout(true)} className="bg-cta mt-8 w-full rounded-full py-5 font-bold tracking-wider text-primary-foreground transition hover:scale-[1.02]">
+            <a href={siteConfig.checkoutUrl} className="bg-cta mt-8 block w-full rounded-full py-5 text-center font-bold tracking-wider text-primary-foreground transition hover:scale-[1.02]">
               ASSINAR AGORA
-            </button>
+            </a>
             <p className="mt-4 text-center text-xs text-muted-foreground">Pagamento exclusivamente via Pix</p>
           </div>
         </div>
