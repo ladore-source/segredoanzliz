@@ -195,6 +195,17 @@
   transform: scale(1.12);
 }
 
+.hero-title {
+  max-width: 100%;
+  color: #fff7fa;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5.3vw, 76px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.05;
+  text-shadow: 0 2px 18px oklch(0.08 0.02 350 / 65%);
+}
+
 @media (max-width: 640px) {
   .hero-gallery__photo-frame,
   .hero-gallery__video-frame {

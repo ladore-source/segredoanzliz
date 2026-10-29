@@ -102,7 +102,7 @@ function Index() {
 
         <div className="relative z-10 mx-auto mt-10 w-full max-w-2xl sm:mt-12">
           <p className="text-xs uppercase tracking-[0.4em] text-primary">{siteConfig.creatorName}</p>
-          <h1 className="mt-4 whitespace-pre-line font-display text-5xl italic leading-[0.98] sm:mt-5 sm:text-7xl lg:text-8xl">{siteConfig.heroTitle}</h1>
+          <h1 className="hero-title mt-4 whitespace-pre-line sm:mt-5">{siteConfig.heroTitle}</h1>
           <p className="mx-auto mt-5 max-w-md text-base text-muted-foreground sm:mt-6 sm:text-lg">{siteConfig.heroSubtitle}</p>
           <a href="#assinar" className="bg-cta mt-8 inline-flex max-w-full items-center justify-center rounded-full px-7 py-4 text-center text-xs font-bold tracking-wider text-primary-foreground transition hover:scale-105 sm:mt-10 sm:px-8 sm:py-5 sm:text-sm">
             {siteConfig.heroCta}
