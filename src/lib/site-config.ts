@@ -12,7 +12,7 @@ export const siteConfig = {
   },
   plan: {
     name: "Acesso VIP",
-    priceCents: 2990,
+    priceCents: 3400,
     benefits: [
       "Fotos exclusivas.",
       "Vídeos sensuais exclusivos.",
