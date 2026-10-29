@@ -211,4 +211,9 @@
   .hero-gallery__video-frame {
     border-radius: 1.1rem;
   }
+
+  .hero-gallery__photo,
+  .hero-gallery__video {
+    filter: blur(3px);
+  }
 }
