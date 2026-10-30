@@ -6,6 +6,7 @@ import { formatBRL, siteConfig } from "@/lib/site-config";
 describe("Plano Acesso VIP", () => {
   it("custa 20 reais por mês", () => {
     expect(siteConfig.plan.priceCents).toBe(2000);
-    expect(formatBRL(siteConfig.plan.priceCents)).toBe("R$ 20,00");
+    // pt-BR currency formatting joins "R$" and the number with a non-breaking space.
+    expect(formatBRL(siteConfig.plan.priceCents)).toBe("R$\u00a020,00");
   });
 });
